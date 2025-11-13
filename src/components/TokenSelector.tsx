@@ -36,11 +36,13 @@ export function TokenSelector({ tokens, selectedToken, onSelect, otherToken }: T
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-xl border-2 border-gray-200 transition"
+        className="flex items-center gap-2 px-3 py-2 bg-white hover:bg-gray-50 rounded-xl border-2 border-gray-200 transition shrink-0"
       >
         {selectedToken ? (
           <>
-            <div className="w-6 h-6 bg-blue-600 rounded-full" />
+            <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-xs">{selectedToken.symbol.charAt(0)}</span>
+            </div>
             <span className="font-bold text-gray-900">{selectedToken.symbol}</span>
           </>
         ) : (
@@ -92,19 +94,22 @@ export function TokenSelector({ tokens, selectedToken, onSelect, otherToken }: T
                     className="w-full flex items-center justify-between p-3 hover:bg-blue-50 rounded-xl transition"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-600 rounded-full" />
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">{token.symbol.charAt(0)}</span>
+                      </div>
                       <div className="text-left">
                         <div className="font-bold text-gray-900">{token.symbol}</div>
-                        <div className="text-sm text-gray-600">{token.name}</div>
-                      </div>
-                    </div>
-                    {token.formattedBalance && (
-                      <div className="text-right">
-                        <div className="font-medium text-gray-900">
-                          {parseFloat(token.formattedBalance).toFixed(4)}
+                        <div className="text-xs text-gray-500 font-mono">
+                          {token.address.slice(0, 6)}...{token.address.slice(-4)}
                         </div>
                       </div>
-                    )}
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900">
+                        {token.formattedBalance ? parseFloat(token.formattedBalance).toFixed(4) : '0.0000'}
+                      </div>
+                      <div className="text-xs text-gray-500">{token.symbol}</div>
+                    </div>
                   </button>
                 ))
               )}
